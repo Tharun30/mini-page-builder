@@ -204,14 +204,7 @@ function Page() {
   };
 
   return (
-    <div
-      style={{
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-      }}
-    >
+    <div className="Page">
       <button
         onClick={handleExport}
         style={{

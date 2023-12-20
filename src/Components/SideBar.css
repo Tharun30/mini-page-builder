@@ -1,0 +1,12 @@
+.sidebar {
+  flex: 3; /* 20% of the available space */
+  background-color: #2d2d2d;
+  color: #ffffff;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: fixed; /* Fixed position to keep it on the right */
+  height: 100vh; /* Full height of the screen */
+  right: 0; /* Align to the right */
+}

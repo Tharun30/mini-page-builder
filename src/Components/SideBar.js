@@ -1,5 +1,6 @@
 import React from "react";
 import DraggableItem from "./DraggableItem";
+import "./SideBar.css";
 function SideBar() {
   const blocks = [
     { type: "label", label: "Label" },

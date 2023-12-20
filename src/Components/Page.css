@@ -1,5 +1,7 @@
-.page {
-  flex: 1;
-  padding: 10px;
+.Page {
+  flex: 7; /* 80% of the available space */
+  overflow-y: auto; /* Allow vertical scrolling if needed */
   height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
