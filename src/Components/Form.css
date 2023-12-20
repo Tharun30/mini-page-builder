@@ -1,0 +1,16 @@
+.MuiFormControl-root {
+  margin-bottom: 16px;
+}
+
+.MuiOutlinedInput-root {
+  border-radius: 4px;
+}
+
+.MuiButton-contained {
+  background-color: #007bff;
+  color: #fff;
+}
+.my-form {
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+}
