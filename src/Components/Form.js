@@ -1,13 +1,13 @@
 // FormComponent.js
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const FormComponent = ({ initialValues, onCloseForm, onSaveChanges }) => {
   const [formState, setFormState] = useState({
-    titleText: "",
+    titleText: initialValues?.titleText,
     xPos: (initialValues?.position?.x).toString() || "",
     yPos: (initialValues?.position?.y).toString() || "",
-    fontSize: "",
-    fontWeight: "",
+    fontSize: initialValues?.fontSize || "",
+    fontWeight: initialValues?.fontWeight || "",
   });
 
   const handleChange = (field, value) => {

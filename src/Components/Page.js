@@ -89,6 +89,7 @@ function Page() {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedComponentIndex]);
 
   const handleDrop = (e) => {
@@ -127,10 +128,10 @@ function Page() {
   const handleDragEnd = () => {
     setDraggedComponent(null);
   };
-  const handleEditComponent = (index) => {
-    setSelectedComponentIndex(index);
-    setShowForm(true);
-  };
+  //   const handleEditComponent = (index) => {
+  //     setSelectedComponentIndex(index);
+  //     setShowForm(true);
+  //   };
 
   const handleCloseForm = () => {
     setSelectedComponentIndex(null);
@@ -143,7 +144,7 @@ function Page() {
         ...updatedComponents[selectedComponentIndex],
         ...updatedValues,
       };
-
+      console.log("updates-->", updatedComponents);
       setDroppedComponents(updatedComponents);
       handleCloseForm();
     }
@@ -158,6 +159,7 @@ function Page() {
     setDroppedComponents(updatedComponents);
     setSelectedComponentIndex(null);
   };
+  console.log(droppedComponents);
   return (
     <div
       style={{
@@ -185,8 +187,8 @@ function Page() {
             key={index}
             style={{
               position: "absolute",
-              left: element?.xPos || element.position.x,
-              top: element?.yPos || element.position.y,
+              left: parseInt(element?.xPos) || element?.position?.x,
+              top: parseInt(element?.yPos) || element?.position?.y,
               border:
                 index !== selectedComponentIndex
                   ? ""
