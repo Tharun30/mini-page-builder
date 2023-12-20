@@ -9,7 +9,7 @@ function SideBar() {
   ];
   return (
     <div className="sidebar">
-      <h3>Blocks</h3>
+      <h3>BLOCKS</h3>
       {blocks.map((block) => (
         <DraggableItem
           key={block?.type}

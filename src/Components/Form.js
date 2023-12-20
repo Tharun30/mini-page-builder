@@ -1,7 +1,8 @@
 // FormComponent.js
 import React, { useState } from "react";
-
-const FormComponent = ({ initialValues, onCloseForm, onSaveChanges }) => {
+import "./Form.css"; // Import the external CSS file
+import CloseIcon from "@mui/icons-material/Close";
+const Form = ({ initialValues, onCloseForm, onSaveChanges }) => {
   const [formState, setFormState] = useState({
     titleText: initialValues?.titleText,
     xPos: (initialValues?.position?.x).toString() || "",
@@ -18,184 +19,53 @@ const FormComponent = ({ initialValues, onCloseForm, onSaveChanges }) => {
     onSaveChanges(formState);
   };
 
+  // Array representing form fields
+  const formFields = [
+    { label: "Text", field: "titleText" },
+    { label: "X Position", field: "xPos" },
+    { label: "Y Position", field: "yPos" },
+    { label: "Font Size", field: "fontSize" },
+    { label: "Font Weight", field: "fontWeight" },
+  ];
+
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        background: "#fff",
-        padding: "16px",
-        borderRadius: "8px",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-        zIndex: 1000,
-        width: "400px",
-      }}
-    >
-      {/* Close button and title */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "16px",
-        }}
-      >
-        <span
-          style={{ fontSize: "18px", fontWeight: "bold", textAlign: "left" }}
-        >
-          Edit
-        </span>
+    <>
+      <div className="Overlay" />
+      <div className="FormContainer">
+        {/* Close button and title */}
+        <div className="TitleContainer">
+          <span className="FormTitle">{`Edit ${initialValues?.type}`}</span>
+          <CloseIcon className="CloseButton" onClick={onCloseForm} />
+        </div>
+        <hr className="HorizontalLine" />
+        {/* Text fields with titles */}
+        <div className="FormFieldContainer">
+          {formFields.map(({ label, field }) => (
+            <div className="FormField" key={field}>
+              <label className="FormFieldLabel">{label}:</label>
+              <input
+                type="text"
+                value={formState[field]}
+                onChange={(e) => handleChange(field, e.target.value)}
+                className="FormFieldInput"
+                placeholder={
+                  label === "Text" ? `This is a ${initialValues?.type}` : ""
+                }
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Submit button */}
         <button
-          style={{
-            background: "none",
-            border: "none",
-            fontSize: "20px",
-            color: "#666",
-          }}
-          onClick={onCloseForm}
+          type="button"
+          onClick={handleSaveChanges}
+          className="SubmitButton"
         >
-          &#10006;
+          Save Changes
         </button>
       </div>
-
-      {/* Text fields with titles */}
-      <div style={{ marginBottom: "16px" }}>
-        <div style={{ marginBottom: "12px" }}>
-          <label
-            style={{
-              fontSize: "14px",
-              fontWeight: "bold",
-              display: "block",
-              textAlign: "left",
-            }}
-          >
-            Title Text:
-          </label>
-          <input
-            type="text"
-            value={formState.titleText}
-            onChange={(e) => handleChange("titleText", e.target.value)}
-            style={{
-              width: "350px",
-              height: "40px",
-              margin: "8px 0",
-              padding: "8px",
-            }}
-          />
-        </div>
-        <div style={{ marginBottom: "12px" }}>
-          <label
-            style={{
-              fontSize: "14px",
-              fontWeight: "bold",
-              display: "block",
-              textAlign: "left",
-            }}
-          >
-            X Position:
-          </label>
-          <input
-            type="text"
-            value={formState.xPos}
-            onChange={(e) => handleChange("xPos", e.target.value)}
-            style={{
-              width: "350px",
-              height: "40px",
-              margin: "8px 0",
-              padding: "8px",
-            }}
-          />
-        </div>
-        <div style={{ marginBottom: "12px" }}>
-          <label
-            style={{
-              fontSize: "14px",
-              fontWeight: "bold",
-              display: "block",
-              textAlign: "left",
-            }}
-          >
-            Y Position:
-          </label>
-          <input
-            type="text"
-            value={formState.yPos}
-            onChange={(e) => handleChange("yPos", e.target.value)}
-            style={{
-              width: "350px",
-              height: "40px",
-              margin: "8px 0",
-              padding: "8px",
-            }}
-          />
-        </div>
-        <div style={{ marginBottom: "12px" }}>
-          <label
-            style={{
-              fontSize: "14px",
-              fontWeight: "bold",
-              display: "block",
-              textAlign: "left",
-            }}
-          >
-            Font Size:
-          </label>
-          <input
-            type="text"
-            value={formState.fontSize}
-            onChange={(e) => handleChange("fontSize", e.target.value)}
-            style={{
-              width: "350px",
-              height: "40px",
-              margin: "8px 0",
-              padding: "8px",
-            }}
-          />
-        </div>
-        <div style={{ marginBottom: "12px" }}>
-          <label
-            style={{
-              fontSize: "14px",
-              fontWeight: "bold",
-              display: "block",
-              textAlign: "left",
-            }}
-          >
-            Font Weight:
-          </label>
-          <input
-            type="text"
-            value={formState.fontWeight}
-            onChange={(e) => handleChange("fontWeight", e.target.value)}
-            style={{
-              width: "350px",
-              height: "40px",
-              margin: "8px 0",
-              padding: "8px",
-            }}
-          />
-        </div>
-      </div>
-
-      {/* Submit button */}
-      <button
-        type="button"
-        onClick={handleSaveChanges}
-        style={{
-          background: "#007BFF",
-          color: "#fff",
-          border: "none",
-          padding: "10px",
-          borderRadius: "4px",
-          textAlign: "left",
-          width: "100%",
-        }}
-      >
-        Save Changes
-      </button>
-    </div>
+    </>
   );
 };
-
-export default FormComponent;
+export default Form;

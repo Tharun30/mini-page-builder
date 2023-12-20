@@ -13,26 +13,23 @@ function renderElementByType(element) {
           className="label-content"
           style={{
             position: "absolute",
-            // left: element?.xPos || element.position.x,
-            // top: element?.yPos || element.position.y,
             fontSize: parseInt(element?.fontSize),
             fontWeight: element?.fontWeight,
           }}
         >
-          {element.titleText || "dummy Content"}
+          {element.titleText || "This is a label"}
         </span>
       );
     case "input":
       return (
         <input
           className="input-field"
-          value={element.titleText || "dummy-value"}
+          value={element.titleText || ""}
           style={{
             position: "absolute",
-            // left: element?.xPos || element.position.x,
-            // top: element?.yPos || element.position.y,
-            fontSize: parseInt(element?.fontSize),
+            fontSize: parseInt(element?.fontSize) || "20px",
             fontWeight: element?.fontWeight,
+            border: 0,
           }}
         />
       );
@@ -42,13 +39,16 @@ function renderElementByType(element) {
           className="button"
           style={{
             position: "absolute",
-            // left: element?.xPos || element.position.x,
-            // top: element?.yPos || element.position.y,
             fontSize: parseInt(element?.fontSize),
             fontWeight: element?.fontWeight,
+            background: "#0044c1",
+            color: "#fff",
+            border: "none",
+            padding: "10px",
+            borderRadius: "4px",
           }}
         >
-          {element.titleText || "dummy-text"}
+          {element.titleText || "Button"}
         </button>
       );
     default:
@@ -205,57 +205,17 @@ function Page() {
 
   return (
     <div className="Page">
-      <button
-        onClick={handleExport}
-        style={{
-          position: "absolute",
-          top: "16px",
-          right: "16px",
-          padding: "8px",
-          backgroundColor: "#007BFF",
-          color: "#fff",
-          border: "none",
-          borderRadius: "100%",
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          zIndex: 1000,
-        }}
-      >
+      <button onClick={handleExport} className="FileDownloadButton">
         <FileDownloadIcon />
       </button>
-      <button
-        onClick={handleImport}
-        style={{
-          position: "absolute",
-          top: "16px",
-          right: "75px",
-          padding: "8px",
-          backgroundColor: "#28a745",
-          color: "#fff",
-          border: "none",
-          borderRadius: "4px",
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          zIndex: 1000,
-        }}
-      >
+      <button onClick={handleImport} className="FileUploadButton">
         <FileUploadIcon />
       </button>
 
       <div
         onDrop={handleDrop}
         onDragOver={handleDragOver}
-        style={{
-          flex: 1,
-          border: "2px dashed #000",
-          minHeight: "200px",
-          padding: "16px",
-          margin: "16px",
-          overflowY: "auto",
-          position: "relative",
-        }}
+        className="dropped-components-container"
       >
         {droppedComponents.map((element, index) => (
           <div
