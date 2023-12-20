@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./Page.css";
 import FormComponent from "./Form";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
+
+const LOCAL_STORAGE_KEY = "mini-page-build";
 function renderElementByType(element) {
   switch (element.type) {
     case "label":
@@ -53,11 +57,17 @@ function renderElementByType(element) {
 }
 
 function Page() {
-  const [droppedComponents, setDroppedComponents] = useState([]);
+  const [droppedComponents, setDroppedComponents] = useState(() => {
+    const storedComponents = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return storedComponents ? JSON.parse(storedComponents) : [];
+  });
   const [showForm, setShowForm] = useState(false);
   const [selectedComponentIndex, setSelectedComponentIndex] = useState(null);
   const [draggedComponent, setDraggedComponent] = useState(null);
 
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(droppedComponents));
+  }, [droppedComponents]);
   useEffect(() => {
     const handleKeyDown = (event) => {
       // Check if the delete key is pressed
@@ -128,10 +138,6 @@ function Page() {
   const handleDragEnd = () => {
     setDraggedComponent(null);
   };
-  //   const handleEditComponent = (index) => {
-  //     setSelectedComponentIndex(index);
-  //     setShowForm(true);
-  //   };
 
   const handleCloseForm = () => {
     setSelectedComponentIndex(null);
@@ -159,7 +165,44 @@ function Page() {
     setDroppedComponents(updatedComponents);
     setSelectedComponentIndex(null);
   };
-  console.log(droppedComponents);
+  const handleImport = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".json";
+    input.onchange = (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          try {
+            const importedData = JSON.parse(e.target.result);
+            setDroppedComponents(importedData.droppedComponents);
+          } catch (error) {
+            console.error("Error parsing JSON file:", error);
+          }
+        };
+        reader.readAsText(file);
+      }
+    };
+    input.click();
+  };
+
+  const handleExport = () => {
+    const exportData = {
+      droppedComponents,
+    };
+    const jsonString = JSON.stringify(exportData, null, 2);
+    const blob = new Blob([jsonString], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "page_configuration.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div
       style={{
@@ -169,6 +212,45 @@ function Page() {
         height: "100vh",
       }}
     >
+      <button
+        onClick={handleExport}
+        style={{
+          position: "absolute",
+          top: "16px",
+          right: "16px",
+          padding: "8px",
+          backgroundColor: "#007BFF",
+          color: "#fff",
+          border: "none",
+          borderRadius: "100%",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          zIndex: 1000,
+        }}
+      >
+        <FileDownloadIcon />
+      </button>
+      <button
+        onClick={handleImport}
+        style={{
+          position: "absolute",
+          top: "16px",
+          right: "75px",
+          padding: "8px",
+          backgroundColor: "#28a745",
+          color: "#fff",
+          border: "none",
+          borderRadius: "4px",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          zIndex: 1000,
+        }}
+      >
+        <FileUploadIcon />
+      </button>
+
       <div
         onDrop={handleDrop}
         onDragOver={handleDragOver}
