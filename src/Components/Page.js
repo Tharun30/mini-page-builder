@@ -3,8 +3,8 @@ import "./Page.css";
 import FormComponent from "./Form";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
+import { LOCAL_STORAGE_KEY } from "../Constants";
 
-const LOCAL_STORAGE_KEY = "mini-page-build";
 function renderElementByType(element) {
   switch (element.type) {
     case "label":
@@ -12,12 +12,11 @@ function renderElementByType(element) {
         <span
           className="label-content"
           style={{
-            position: "absolute",
             fontSize: parseInt(element?.fontSize),
             fontWeight: element?.fontWeight,
           }}
         >
-          {element.titleText || "This is a label"}
+          {element.titleText || `This is a label`}
         </span>
       );
     case "input":
@@ -26,7 +25,6 @@ function renderElementByType(element) {
           className="input-field"
           value={element.titleText || ""}
           style={{
-            position: "absolute",
             fontSize: parseInt(element?.fontSize) || "20px",
             fontWeight: element?.fontWeight,
             border: 0,
@@ -38,7 +36,6 @@ function renderElementByType(element) {
         <button
           className="button"
           style={{
-            position: "absolute",
             fontSize: parseInt(element?.fontSize),
             fontWeight: element?.fontWeight,
             background: "#0044c1",
@@ -70,7 +67,6 @@ function Page() {
   }, [droppedComponents]);
   useEffect(() => {
     const handleKeyDown = (event) => {
-      // Check if the delete key is pressed
       if (
         event.key === "Delete" ||
         (event.key === "Backspace" &&
@@ -79,23 +75,19 @@ function Page() {
             event.target.tagName === "TEXTAREA"
           ))
       ) {
-        // Call the delete function if a component is selected
         if (selectedComponentIndex !== null) {
           handleDeleteComponent(selectedComponentIndex);
         }
       }
       if (event.key === "Enter") {
-        // Open the form for editing if a component is selected
         if (selectedComponentIndex !== null) {
           setShowForm(true);
         }
       }
     };
 
-    // Add event listener
     document.addEventListener("keydown", handleKeyDown);
 
-    // Remove event listener on component unmount
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
@@ -243,13 +235,11 @@ function Page() {
             draggable
             onClick={() => handleComponentClick(index)}
           >
-            {/* Initially hidden until edited in the form */}
             {showForm && selectedComponentIndex === index
               ? null
               : renderElementByType(element)}
           </div>
         ))}
-        {/* Render the form conditionally */}
         {showForm && selectedComponentIndex !== null && (
           <FormComponent
             initialValues={droppedComponents[selectedComponentIndex]}

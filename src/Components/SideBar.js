@@ -1,12 +1,8 @@
 import React from "react";
 import DraggableItem from "./DraggableItem";
 import "./SideBar.css";
+import { blocks } from "../Constants";
 function SideBar() {
-  const blocks = [
-    { type: "label", label: "Label" },
-    { type: "input", label: "Input" },
-    { type: "button", label: "Button" },
-  ];
   return (
     <div className="sidebar">
       <h3>BLOCKS</h3>

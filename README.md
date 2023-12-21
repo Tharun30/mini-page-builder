@@ -13,6 +13,7 @@ Before you begin, ensure you have met the following requirements:
 
 - **Node.js:** [Download and install Node.js](https://nodejs.org/).
 - **npm (Node Package Manager):** This is included with Node.js installation.
+- **yarn:** `npm install --global yarn` for windows & `brew install yarn` in macOS
 
 ## Installation
 

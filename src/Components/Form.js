@@ -1,7 +1,9 @@
 // FormComponent.js
 import React, { useState } from "react";
-import "./Form.css"; // Import the external CSS file
+import "./Form.css";
 import CloseIcon from "@mui/icons-material/Close";
+import { formFields } from "../Constants";
+
 const Form = ({ initialValues, onCloseForm, onSaveChanges }) => {
   const [formState, setFormState] = useState({
     titleText: initialValues?.titleText,
@@ -19,26 +21,15 @@ const Form = ({ initialValues, onCloseForm, onSaveChanges }) => {
     onSaveChanges(formState);
   };
 
-  // Array representing form fields
-  const formFields = [
-    { label: "Text", field: "titleText" },
-    { label: "X Position", field: "xPos" },
-    { label: "Y Position", field: "yPos" },
-    { label: "Font Size", field: "fontSize" },
-    { label: "Font Weight", field: "fontWeight" },
-  ];
-
   return (
     <>
       <div className="Overlay" />
       <div className="FormContainer">
-        {/* Close button and title */}
         <div className="TitleContainer">
           <span className="FormTitle">{`Edit ${initialValues?.type}`}</span>
           <CloseIcon className="CloseButton" onClick={onCloseForm} />
         </div>
         <hr className="HorizontalLine" />
-        {/* Text fields with titles */}
         <div className="FormFieldContainer">
           {formFields.map(({ label, field }) => (
             <div className="FormField" key={field}>
@@ -56,7 +47,6 @@ const Form = ({ initialValues, onCloseForm, onSaveChanges }) => {
           ))}
         </div>
 
-        {/* Submit button */}
         <button
           type="button"
           onClick={handleSaveChanges}
