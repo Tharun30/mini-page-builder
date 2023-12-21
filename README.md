@@ -7,6 +7,10 @@ The Mini Page Builder is a simple web application that allows users to create a 
 The project is hosted on Netlify. You can access the site directly by clicking [here](https://mini-page-builder-ta.netlify.app/).
 or can access using this url `https://mini-page-builder-ta.netlify.app/`
 
+## Dive Deeper into Documentation
+
+For comprehensive details on features, usage, and development, please visit [wiki](https://github.com/Tharun30/mini-page-builder/wiki)
+
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
