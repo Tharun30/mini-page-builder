@@ -13,6 +13,12 @@
   justify-content: flex-start;
   align-items: center;
 }
+@media only screen and (max-width: 600px) {
+  .block-button {
+    margin-right: 0.7rem;
+    border-radius: 50px;
+  }
+}
 
 .block-button:active {
   cursor: grabbing;
@@ -21,4 +27,7 @@
 .drag-icon {
   color: #d4d4d4;
   padding: 5px;
+}
+.block-button.dragging {
+  cursor: grabbing;
 }

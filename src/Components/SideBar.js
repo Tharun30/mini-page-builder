@@ -6,13 +6,15 @@ function SideBar() {
   return (
     <div className="sidebar">
       <h3>BLOCKS</h3>
-      {blocks.map((block) => (
-        <DraggableItem
-          key={block?.type}
-          type={block?.type}
-          label={block?.label}
-        />
-      ))}
+      <div className="blocks">
+        {blocks.map((block) => (
+          <DraggableItem
+            key={block?.type}
+            type={block?.type}
+            label={block?.label}
+          />
+        ))}
+      </div>
     </div>
   );
 }

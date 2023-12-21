@@ -1,4 +1,3 @@
-// FormComponent.js
 import React, { useState } from "react";
 import "./Form.css";
 import CloseIcon from "@mui/icons-material/Close";
