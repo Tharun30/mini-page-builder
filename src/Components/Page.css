@@ -14,7 +14,7 @@ button {
 
 .FileDownloadButton {
   position: absolute;
-  top: 16px;
+  bottom: 16px;
   right: 16px;
   padding: 8px;
   background-color: #007bff;
@@ -29,7 +29,7 @@ button {
 
 .FileUploadButton {
   position: absolute;
-  top: 16px;
+  bottom: 16px;
   right: 75px;
   padding: 8px;
   background-color: #28a745;

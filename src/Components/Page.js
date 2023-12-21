@@ -126,6 +126,7 @@ function Page() {
   };
   const handleDragOver = (e) => {
     e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
   };
   const handleDragEnd = () => {
     setDraggedComponent(null);
@@ -142,7 +143,6 @@ function Page() {
         ...updatedComponents[selectedComponentIndex],
         ...updatedValues,
       };
-      console.log("updates-->", updatedComponents);
       setDroppedComponents(updatedComponents);
       handleCloseForm();
     }
@@ -197,10 +197,18 @@ function Page() {
 
   return (
     <div className="Page">
-      <button onClick={handleExport} className="FileDownloadButton">
+      <button
+        onClick={handleExport}
+        className="FileDownloadButton"
+        title="Export"
+      >
         <FileDownloadIcon />
       </button>
-      <button onClick={handleImport} className="FileUploadButton">
+      <button
+        onClick={handleImport}
+        className="FileUploadButton"
+        title="Import"
+      >
         <FileUploadIcon />
       </button>
 
