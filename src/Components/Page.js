@@ -62,8 +62,6 @@ function Page() {
   const [showForm, setShowForm] = useState(false);
   const [selectedComponentIndex, setSelectedComponentIndex] = useState(null);
   const [draggedComponent, setDraggedComponent] = useState(null);
-  const [draggedComponentIndex, setDraggedComponentIndex] = useState(null);
-  const [isNewElement, setIsNewElement] = useState(false);
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(droppedComponents));
   }, [droppedComponents]);
@@ -109,7 +107,6 @@ function Page() {
       ]);
       setSelectedComponentIndex(droppedComponents.length);
       setShowForm(true);
-      setIsNewElement(true);
     } else {
       const updatedComponents = [...droppedComponents];
       updatedComponents[draggedComponent].position = {
@@ -139,15 +136,7 @@ function Page() {
   };
 
   const handleCloseForm = () => {
-    if (isNewElement) {
-      const updatedComponents = [...droppedComponents];
-      updatedComponents.pop();
-      setDroppedComponents(updatedComponents);
-      setIsNewElement(false);
-      setShowForm(false);
-    } else {
-      setShowForm(false);
-    }
+    setShowForm(false);
   };
   const handleSaveChanges = (updatedValues) => {
     if (selectedComponentIndex !== null) {
@@ -157,7 +146,7 @@ function Page() {
         ...updatedValues,
       };
       setDroppedComponents(updatedComponents);
-      handleCloseForm();
+      handleCloseForm(false);
     }
   };
   const handleComponentClick = (index) => {
@@ -208,30 +197,6 @@ function Page() {
     URL.revokeObjectURL(url);
   };
 
-  const handleTouchStart = (e, index) => {
-    setDraggedComponentIndex(index);
-  };
-
-  const handleTouchMove = (e) => {
-    e.preventDefault();
-
-    if (draggedComponentIndex !== null) {
-      const updatedComponents = [...droppedComponents];
-      updatedComponents[draggedComponentIndex].position = {
-        x: e.touches[0].clientX,
-        y: e.touches[0].clientY,
-      };
-      updatedComponents[draggedComponentIndex].xPos = e.touches[0].clientX;
-      updatedComponents[draggedComponentIndex].yPos = e.touches[0].clientY;
-      console.log(updatedComponents);
-      setDroppedComponents(updatedComponents);
-    }
-  };
-
-  const handleTouchEnd = () => {
-    setDraggedComponentIndex(null);
-  };
-
   return (
     <div className="Page">
       <button
@@ -252,9 +217,6 @@ function Page() {
       <div
         onDrop={handleDrop}
         onDragOver={handleDragOver}
-        onTouchStart={(e) => handleTouchStart(e, 0)}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
         className="dropped-components-container"
       >
         {droppedComponents.map((element, index) => (
@@ -280,9 +242,6 @@ function Page() {
             }}
             onDragStart={(e) => handleDragStart(e, index)}
             onDragEnd={handleDragEnd}
-            onTouchStart={(e) => handleTouchStart(e, index)}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
             draggable
             onClick={() => handleComponentClick(index)}
           >
