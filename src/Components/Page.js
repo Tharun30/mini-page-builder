@@ -135,8 +135,16 @@ function Page() {
     });
   };
 
-  const handleCloseForm = () => {
+  const handleCloseForm = (del = true) => {
+    if (del) {
+      const updatedComponents = [...droppedComponents];
+      updatedComponents.pop();
+      setDroppedComponents(updatedComponents);
+    }
+
+    setSelectedComponentIndex(null);
     setShowForm(false);
+    setDraggedComponent(null);
   };
   const handleSaveChanges = (updatedValues) => {
     if (selectedComponentIndex !== null) {

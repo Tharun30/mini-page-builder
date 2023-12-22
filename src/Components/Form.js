@@ -6,8 +6,8 @@ import { formFields } from "../Constants";
 const Form = ({ initialValues, onCloseForm, onSaveChanges }) => {
   const [formState, setFormState] = useState({
     titleText: initialValues?.titleText,
-    xPos: (initialValues?.position?.x).toString() || "",
-    yPos: (initialValues?.position?.y).toString() || "",
+    xPos: initialValues?.position?.x?.toString() || "",
+    yPos: initialValues?.position?.y?.toString() || "",
     fontSize: initialValues?.fontSize || "",
     fontWeight: initialValues?.fontWeight || "",
   });
